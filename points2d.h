@@ -1,4 +1,4 @@
-// Drew Bruck - 24242807
+// --> YOUR NAME here
 // Few comments describing the class Points2D
 
 #ifndef CSCI335_HOMEWORK1_POINTS2D_H_
@@ -22,16 +22,11 @@ class Points2D {
     //  and you will provide an implementation.
 
     // Zero-parameter constructor.
-    // Set size to 0.
-    Points2D(){
-        
-    }
+    Points2D(){}    //Creates an instance of the class with size zero.
 
     // Copy-constructor.
-    Points2D(const Points2D &rhs){
-     
-    }
-    
+    Points2D(const Points2D &rhs) = default;
+
     // Copy-assignment. If you have already written
     // the copy-constructor and the move-constructor
     // you can just use:

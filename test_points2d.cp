@@ -14,7 +14,7 @@ using namespace teaching_project;
 namespace {
 void TestPart1() {
     Points2D<int> a, b;  // Two empty Points2D are created.
-    cout << a.size() << " " << b.size() << endl; // yields 0 0.
+    cout << a.size() << " " << b.size() << endl; // yields 0 0. /*
     const array<int, 2> a_point2{{7, 10}};
     Points2D<int> d{a_point2};  // A Points2D containing (7, 10) should be created.
     cout << d;  // Should just print (7, 10).
@@ -45,7 +45,7 @@ void TestPart1() {
     cout << a;
     cout << e;
 }
-/*
+
 void TestPart2() {
     Points2D<double> a, b;
     cout << "Enter a sequence of points (double)" << endl;
@@ -62,11 +62,11 @@ void TestPart2() {
     cout << "Second element in a: " << endl;
     cout << a[1][0] << ", " << a[1][1] << endl;  // Should print the 2nd element.
 }
-*/
+
 } // namespace
 
 int main(int argc, char **argv) {
     TestPart1();
-    //TestPart2();
-    return 0;
+    TestPart2();
+    return 0;*/
 }
