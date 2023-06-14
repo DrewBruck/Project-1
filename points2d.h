@@ -1,4 +1,4 @@
-// --> YOUR NAME here
+// Drew Bruck  - 24242807
 // Few comments describing the class Points2D
 
 #ifndef CSCI335_HOMEWORK1_POINTS2D_H_
@@ -22,39 +22,64 @@ class Points2D {
     //  and you will provide an implementation.
 
     // Zero-parameter constructor.
-    Points2D(){}    //Creates an instance of the class with size zero.
+    //Creates an instance of the class with size zero.
+    Points2D(){
+        size_=0;
+        sequence_=nullptr;
+    };    
 
     // Copy-constructor.
-    Points2D(const Points2D &rhs) = default;
+    Points2D(const Points2D &rhs){
+        size_= rhs.size();
+        sequence_= new std::array<Object, 2>[size_];
+        for(size_t i=0; i<size_; i++){
+            sequence_[i] = rhs[i];
+        }
+    };
 
     // Copy-assignment. If you have already written
     // the copy-constructor and the move-constructor
-    // you can just use:
-    // {
-    // Points2D copy = rhs;
-    // std::swap(*this, copy);
-    // return *this;
-    // }
-    Points2D& operator=(const Points2D &rhs) = default;
+   
+    Points2D& operator=(const Points2D &rhs){
+        Points2D copy = rhs;
+        std::swap(*this, copy);
+        return *this;
+    }
 
     // Move-constructor.
-    Points2D(Points2D &&rhs) = default;
+    Points2D(Points2D &&rhs){
+        size_=rhs.size();
+        sequence_ = new std::array<Object, 2>[size_];
+        for(size_t i=0; i,size_; i++){
+            sequence_[i]=rhs[i];
+        }
+    };
 
     // Move-assignment.
     // Just use std::swap() for all variables.
-    Points2D& operator=(Points2D &&rhs) = default;
+    Points2D& operator=(Points2D &&rhs){
+        Points2D copy = rhs;
+        std::swap(*this, copy);
+        copy.sequence_=nullptr;
+        copy.size_=0;
+        return *this;
+    };
 
-    ~Points2D() = default;
+    ~Points2D(){
+        size_=0;
+        delete sequence_;
+    };
 
     // End of big-five.
 
     // One parameter constructor.
     Points2D(const std::array<Object, 2>& item) {
-        // Provide code.
+        sequence_ = new std::array<Object, 2>{item};
+        size_= 2;
     }
 
     size_t size() const {
-        // Code missing.
+        return size_;
     }
 
     // @location: an index to a location in the sequence.
@@ -90,6 +115,5 @@ class Points2D {
     // Size of sequence.
     size_t size_;
 };
-
-}  // namespace teaching_project
+}  // namespace teaching_project 
 #endif // CSCI_335_HOMEWORK1_Points2D_H_
