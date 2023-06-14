@@ -16,11 +16,11 @@ void TestPart1() {
     Points2D<int> a, b;  // Two empty Points2D are created.
     cout << a.size() << " " << b.size() << endl; // yields 0 0.
      
-    }/*
+    
     const array<int, 2> a_point2{{7, 10}};
     Points2D<int> d{a_point2};  // A Points2D containing (7, 10) should be created.
-    cout << d;  // Should just print (7, 10).
-    
+    //cout << d;  // Should just print (7, 10).
+    }/*
     cout << "Enter a sequence of points (integer)" << endl;
     cin >> a; // User enters a set of points in the form:
               // 3 7 4 3 2 1 10

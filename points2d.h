@@ -25,7 +25,7 @@ class Points2D {
     //Creates an instance of the class with size zero.
     Points2D(){
         size_=0;
-        sequence_=nullptr;
+        //sequence_=nullptr;
     };    
 
     // Copy-constructor.
@@ -37,9 +37,7 @@ class Points2D {
         }
     };
 
-    // Copy-assignment. If you have already written
-    // the copy-constructor and the move-constructor
-   
+    // Copy-assignment. 
     Points2D& operator=(const Points2D &rhs){
         Points2D copy = rhs;
         std::swap(*this, copy);
@@ -58,11 +56,8 @@ class Points2D {
     // Move-assignment.
     // Just use std::swap() for all variables.
     Points2D& operator=(Points2D &&rhs){
-        Points2D copy = rhs;
-        std::swap(*this, copy);
-        copy.sequence_=nullptr;
-        copy.size_=0;
-        return *this;
+        std::swap(this->size_, rhs.size_);
+        std::swap(this->sequence_, rhs.sequence_);
     };
 
     ~Points2D(){
@@ -75,7 +70,7 @@ class Points2D {
     // One parameter constructor.
     Points2D(const std::array<Object, 2>& item) {
         sequence_ = new std::array<Object, 2>{item};
-        size_= 2;
+        size_= item.size()/2;
     }
 
     size_t size() const {
@@ -87,7 +82,13 @@ class Points2D {
     // const version.
     // abort() if out-of-range.
     const std::array<Object, 2>& operator[](size_t location) const {
-        // Code missing.
+        if(location < this->size_-1){
+            return sequence_[location];
+        }
+        else{
+            std::cerr<<"ERROR - invalid input";
+            abort();
+        }
     }
 
     //  @c1: A sequence.
@@ -95,7 +96,37 @@ class Points2D {
     //  @return their sum. If the sequences are not of the same size, append the
     //    result with the remaining part of the larger sequence.
     friend Points2D operator+(const Points2D &c1, const Points2D &c2) {
-        // Code missing.
+        Points2D result;                                                //Creates a new Points 2D object called "result"
+        if(c1.size_ == c2.size_){                                       //Checks to see if both sequence are equivalent in size.
+            result.size_=c1.size_;                                      //Changes result's size_ to the same value as the sequences.
+            result.sequence_= new std::array<Object, 2>[result.size_];  //Creates a new sequence_ with matching size to the result array.
+            for(size_t i=0; i<result.size_; i++){                       //This begins the loop to add their matching indices together.
+                result.sequence_[i]= (c1[i]+c2[i]);
+            }
+        }
+        else if(c1.size_ > c2.size_){                                   //Checks to see if c1's size_ is bigger than c2's size_.
+            result.size_=c1.size_;                                      //Changes result's size_ to the same value as c1, since c1 is larger in this if statement.
+            result.sequence_= new std::array<Object, 2>[result.size_];  //Creates a new sequence_ with matching size to the result array.
+            for(size_t i=0; i<c2.size_; i++){                           //This begins the loop to add their matching indices together.
+                result.sequence_[i]= (c1[i]+c2[i]);
+            }
+            for(size_t j=c2.size_; j<c1.size_; j++){                    //This loop is to append the unmatched values in the larger c1 to the result array.
+                result.sequence_[j]=c1[j];
+            }
+        }
+        else if(c1.size_ < c2.size_){                                   //Checks to see if c2's size_ is bigger than c1's size_.
+            result.size_=c2.size_;                                      //Changes result's size_ to the same value as c2, since c2 is larger in this if statement.
+            result.sequence_ = new std::array<Object, 2>[result.size];  //Creates a new sequence_ with matching size to the result array.
+            for(size_t i=0; i<c1.size_; i++){                           //This begins the loop to add their matching indices together.
+                result.sequence_[i] = (c1[i]+c2[i]);
+            }
+            for(size_t j=c1.size_; j<c2.size_; j++){                    //This loop is to append the unmatched values in the larger c1 to the result array.
+                result.sequence_[j] = c2[j];
+            }
+
+
+        }
+        return result;                                                  //returns Points2D result.
     }
 
     // Overloading the << operator.
