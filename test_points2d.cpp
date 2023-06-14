@@ -2,7 +2,7 @@
 // if needed.
 // You can also comment parts of the functions, and uncomment
 // as you add more functionality.
-#include <points2d.h>
+#include "points2d.h"
 
 #include <array>
 #include <iostream>
@@ -14,10 +14,13 @@ using namespace teaching_project;
 namespace {
 void TestPart1() {
     Points2D<int> a, b;  // Two empty Points2D are created.
-    cout << a.size() << " " << b.size() << endl; // yields 0 0. /*
+    cout << a.size() << " " << b.size() << endl; // yields 0 0.
+     
+    }/*
     const array<int, 2> a_point2{{7, 10}};
     Points2D<int> d{a_point2};  // A Points2D containing (7, 10) should be created.
     cout << d;  // Should just print (7, 10).
+    
     cout << "Enter a sequence of points (integer)" << endl;
     cin >> a; // User enters a set of points in the form:
               // 3 7 4 3 2 1 10
@@ -62,11 +65,11 @@ void TestPart2() {
     cout << "Second element in a: " << endl;
     cout << a[1][0] << ", " << a[1][1] << endl;  // Should print the 2nd element.
 }
-
+*/
 } // namespace
 
 int main(int argc, char **argv) {
     TestPart1();
-    TestPart2();
-    return 0;*/
+    //TestPart2();
+    return 0;
 }
