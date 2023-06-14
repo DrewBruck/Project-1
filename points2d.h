@@ -25,7 +25,7 @@ class Points2D {
     //Creates an instance of the class with size zero.
     Points2D(){
         size_=0;
-        //sequence_=nullptr;
+        sequence_=nullptr;
     };    
 
     // Copy-constructor.
@@ -62,15 +62,15 @@ class Points2D {
 
     ~Points2D(){
         size_=0;
-        delete sequence_;
+        delete *sequence_;
     };
 
     // End of big-five.
 
     // One parameter constructor.
     Points2D(const std::array<Object, 2>& item) {
-        sequence_ = new std::array<Object, 2>{item};
-        size_= item.size()/2;
+        size_= item.size();
+        *sequence_ = new std::array<Object, 2>[size_];
     }
 
     size_t size() const {
@@ -142,7 +142,7 @@ class Points2D {
 
   private:
     // Sequence of points.
-    std::array<Object, 2> *sequence_;
+    const std::array<Object, 2> *sequence_;
     // Size of sequence.
     size_t size_;
 };
