@@ -24,16 +24,17 @@ class Points2D {
     // Zero-parameter constructor.
     //Creates an instance of the class with size zero.
     Points2D(){
-        size_=0;
-        sequence_=nullptr;
+        this->size_ = 0;
+        this->sequence_ = nullptr;
     };    
 
     // Copy-constructor.
     Points2D(const Points2D &rhs){
-        size_= rhs.size();
-        sequence_= new std::array<Object, 2>[size_];
-        for(size_t i=0; i<size_; i++){
-            sequence_[i] = rhs[i];
+        this->size_= rhs.size_;
+        this->sequence_= new std::array<Object, 2>[this->size_];
+        for(size_t i=0; i<this->size_; i++){
+            this->sequence_[i][0] = rhs[i][0];
+            this->sequence_[i][1] = rhs[i][1];
         }
     };
 
@@ -46,11 +47,10 @@ class Points2D {
 
     // Move-constructor.
     Points2D(Points2D &&rhs){
-        size_=rhs.size();
-        sequence_ = new std::array<Object, 2>[size_];
-        for(size_t i=0; i,size_; i++){
-            sequence_[i]=rhs[i];
-        }
+        this->size_=rhs.size();
+        this->sequence_ = rhs->sequence_;
+        rhs->size_ = 0;
+        rhs->sequence_ = nullptr;
     };
 
     // Move-assignment.
@@ -58,19 +58,24 @@ class Points2D {
     Points2D& operator=(Points2D &&rhs){
         std::swap(this->size_, rhs.size_);
         std::swap(this->sequence_, rhs.sequence_);
+    return *this;
     };
 
     ~Points2D(){
-        size_=0;
-        delete *sequence_;
+        if(this->size_>0){
+            this->size_=0;
+            delete this->sequence_;
+        }
     };
 
     // End of big-five.
 
     // One parameter constructor.
     Points2D(const std::array<Object, 2>& item) {
-        size_= item.size();
-        *sequence_ = new std::array<Object, 2>[size_];
+        this->size_= item->size();
+        this->sequence_ = new std::array<Object,2>[item->size()];
+        this->sequence_[0][0] = item[0];
+        this->sequence_[0][1] = item[1];
     }
 
     size_t size() const {
@@ -83,7 +88,7 @@ class Points2D {
     // abort() if out-of-range.
     const std::array<Object, 2>& operator[](size_t location) const {
         if(location < this->size_-1){
-            return sequence_[location];
+            return this->sequence_[location];
         }
         else{
             std::cerr<<"ERROR - invalid input";
@@ -124,14 +129,25 @@ class Points2D {
                 result.sequence_[j] = c2[j];
             }
 
-
         }
         return result;                                                  //returns Points2D result.
     }
 
     // Overloading the << operator.
     friend std::ostream &operator<<(std::ostream &out, const Points2D &some_points) {
-        // Code missing.
+        if (some_points.size_ <=0){
+            out << "()" << std::endl;
+            return out;
+        }
+        for (size_t i=0; i<some_points.size_; i++){
+            out << "(";
+            out << some_points[i][0];
+            out << ",";
+            out << some_points[i][1];
+            out << ")";
+        }
+        out<< std::endl;
+        return out;
     }
 
     // Overloading the >> operator.
