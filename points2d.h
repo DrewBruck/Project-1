@@ -47,10 +47,10 @@ class Points2D {
 
     // Move-constructor.
     Points2D(Points2D &&rhs){
-        this->size_=rhs.size();
-        this->sequence_ = rhs->sequence_;
-        rhs->size_ = 0;
-        rhs->sequence_ = nullptr;
+        this->size_=rhs.size_;
+        this->sequence_ = rhs.sequence_;
+        rhs.size_ = 0;
+        rhs.sequence_ = nullptr;
     };
 
     // Move-assignment.
@@ -87,7 +87,7 @@ class Points2D {
     // @returns the point at @location.
     // const version.
     // abort() if out-of-range.
-    const std::array<Object, 2>& operator[](size_t location) const {
+    std::array<Object, 2>& operator[](size_t location) const {
         if(location > this->size_){
             std::cerr<<"ERROR - invalid input";
             abort();
@@ -101,17 +101,17 @@ class Points2D {
     //    result with the remaining part of the larger sequence.
     friend Points2D operator+(const Points2D &c1, const Points2D &c2) {
         if(c1.size_ == c2.size_){                                       //Checks to see if both sequence are equivalent in size.
-            Points2D result(c1.size_);                                  //Creates a new Points 2D object called "result"
+            Points2D<Object> result;                                  //Creates a new Points 2D object called "result"
             result.size_=c1.size_;                                      //Changes result's size_ to the same value as the sequences.
             result.sequence_= new std::array<Object, 2>[result.size_];  //Creates a new sequence_ with matching size to the result array.
             for(size_t i=0; i<result.size_; i++){                       //This begins the loop to add their matching indices together.
-                result[i][0]= (c1[i][0]+c2[i][0]);
-                result[i][1]= (c1[i][1]+c2[i][1]);
+                result[i][0]= c1[i][0]+c2[i][0];
+                result[i][1]= c1[i][1]+c2[i][1];
             }
             return result;
         }
         else if(c1.size_ > c2.size_){                                   //Checks to see if c1's size_ is bigger than c2's size_.
-            Points2D result(c1.size_);                                  //Creates a new Points 2D object called "result"
+            Points2D<Object> result;                                  //Creates a new Points 2D object called "result"
             result.size_=c1.size_;                                      //Changes result's size_ to the same value as c1, since c1 is larger in this if statement.
             result.sequence_= new std::array<Object, 2>[result.size_];  //Creates a new sequence_ with matching size to the result array.
             for(size_t i=0; i<c2.size_; i++){                           //This begins the loop to add their matching indices together.
@@ -125,9 +125,9 @@ class Points2D {
             return result;
         }
         else if(c1.size_ < c2.size_){                                   //Checks to see if c2's size_ is bigger than c1's size_.
-            Points2D result(c2.size_);                                  //Creates a new Points 2D object called "result"
+            Points2D<Object> result;                                  //Creates a new Points 2D object called "result"
             result.size_=c2.size_;                                      //Changes result's size_ to the same value as c2, since c2 is larger in this if statement.
-            result.sequence_ = new std::array<Object, 2>[result.size];  //Creates a new sequence_ with matching size to the result array.
+            result.sequence_ = new std::array<Object, 2>[result.size_];  //Creates a new sequence_ with matching size to the result array.
             for(size_t i=0; i<c1.size_; i++){                           //This begins the loop to add their matching indices together.
                 result.sequence_[i][0] = (c1[i][0]+c2[i][0]);
                 result.sequence_[i][1] = (c1[i][1]+c2[i][1]);
@@ -160,12 +160,22 @@ class Points2D {
     // Overloading the >> operator.
     // Read a chain from an input stream (e.g., standard input).
     friend std::istream &operator>>(std::istream &in, Points2D &some_points) {
-        // Code missing.
+        int sum_size;
+        in >> sum_size;
+        some_points.size_ = sum_size;
+        some_points.sequence_ = new std::array<Object, 2>[sum_size];
+        for(int i = 0; i < sum_size; i++){
+            int a, b;
+            in >> a >> b;
+            some_points[i][0] = a;
+            some_points[i][1] = b;
+        }
+        return in;
     }
 
   private:
     // Sequence of points.
-    const std::array<Object, 2> *sequence_;
+    std::array<Object, 2> *sequence_;
     // Size of sequence.
     size_t size_;
 };
