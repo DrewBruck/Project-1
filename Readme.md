@@ -13,3 +13,12 @@ This was only made possible by overloading certain key features within the progr
 as <<. >>, +, and =.  By changing the behaviors of these operators, the user should be
 able to use these operations on created objects in the program as though they were 
 simple integers or strings.
+
+The burden within the assignment was most evident by the overloading of the >> operator so
+that the object class could have user-input as a means of constructing 2d Point Objects. 
+My inital attempt to solve this involved way too many steps and took in the entire input as 
+a string.  Then using the "stoi" operator from the STL, manipulating that to work with 
+the constructors.  This proved to be quite a mess and a headache.  My second attempt is 
+what is present and that involves taking the first number to create an appropriately sized
+object and then creating a loop of that size to correctly input all the points into the class.
+

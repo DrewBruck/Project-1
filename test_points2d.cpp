@@ -55,6 +55,7 @@ void TestPart2() {
     cout << a;
     cout << "Enter a sequence of points (double)" << endl;
     cin >> b; // User provides input for Points2D b.
+    
     cout << b << endl;
     cout << "Result of a + b" << endl;
     cout << a + b << endl;
@@ -62,13 +63,13 @@ void TestPart2() {
     cout << "Result of d = a + b" << endl;
     cout << d;
     cout << "Second element in a: " << endl;
-    cout << a[1][0] << ", " << a[1][1] << endl;  // Should print the 2nd element.
+    cout << a[1][0] << ", " << a[1][1] << endl; // Should print the 2nd element.
 }
 
 } // namespace
 
 int main(int argc, char **argv) {
     TestPart1();
-    //TestPart2();
+    TestPart2();
     return 0;
 }
