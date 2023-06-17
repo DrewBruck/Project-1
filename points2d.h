@@ -10,6 +10,7 @@
 #include <cstddef>
 #include <string>
 #include <sstream>
+#include <ctype.h>
 
 namespace teaching_project {
 
@@ -151,7 +152,7 @@ class Points2D {
             }
         return result;
         }       
-        std::cerr<<"ERROR - invalid input";
+        std::cerr<<"ERROR - invalid input"<< std::endl;;
         abort();                                          
     }
 
@@ -181,11 +182,19 @@ class Points2D {
     friend std::istream &operator>>(std::istream &in, Points2D &some_points) {
         int sum_size;
         in >> sum_size;
+        if(isalpha(sum_size) == 0){
+            std::cerr<<"ERROR - invalid input" << std::endl;
+            abort();                       
+        }
         some_points.size_ = sum_size;
         some_points.sequence_ = new std::array<Object, 2>[sum_size];
         for(int i = 0; i < sum_size; i++){
             Object a, b;
             in >> a >> b;
+            if(isalpha(a) == 0 || isalpha(b) == 0){
+                std::cerr<<"ERROR - invalid input" << std::endl;
+                abort(); 
+            }
             some_points[i][0] = a;
             some_points[i][1] = b;
         }
