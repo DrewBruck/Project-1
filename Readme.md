@@ -1,4 +1,4 @@
-Drew Bruck - #24242807
+Drew Bruck
 Project 1 Readme File
 
 This project is (hopefully) a functional, fully working program that can create 
